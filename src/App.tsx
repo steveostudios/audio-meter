@@ -1,11 +1,10 @@
-import React, { ChangeEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./App.css";
 import styled from "@emotion/styled";
 import { FreqInput } from "./components/FreqInput";
 import { ColorInput } from "./components/ColorInput";
 import { Microphone } from "./helpers/microphone";
 import { NumberInput } from "./components/NumberInput";
-import { on } from "events";
 import { SquishInput } from "./components/SquishInput";
 
 interface Colors {
@@ -99,6 +98,7 @@ const App: React.FC = () => {
 
         ctx.fillStyle = grad;
         ctx.fillRect(x, y, width, height);
+        return null;
       });
 
       // draw grid
