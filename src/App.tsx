@@ -27,8 +27,13 @@ const App: React.FC = () => {
   const [mode, setMode] = React.useState<Mode>(Mode.MIC);
   const [controlPanel, setControlPanel] = React.useState(true);
   const [freq, setFreq] = React.useState([1, 2, 3, 4, 6, 8, 12, 16]);
+  const [barHeights, setBarHeights] = React.useState(
+    Array(freq.length).fill(0)
+  );
+
   const [colors, setColors] = React.useState<Colors>({
-    background: "#000000",
+    background: "#1e1e1e",
+    grid: "#000000",
     base: "#203662",
     mid: "#55a2a8",
     peak: "#c5203f",
@@ -71,6 +76,23 @@ const App: React.FC = () => {
 
       const GRID_SIZE = 450 / grid.count; // 450 is the height of the canvas
 
+      // draw fake bars
+      // Update bar heights
+      const newBarHeights = barHeights.map((height: number, i: number) => {
+        const targetHeight = Math.random() * -ctx.canvas.height;
+        const remainder = targetHeight % GRID_SIZE;
+        const adjustedHeight =
+          remainder !== 0 ? targetHeight - remainder : targetHeight;
+
+        // Smoothly animate towards the target height
+        const delta = (adjustedHeight - height) * 0.1; // Adjust the factor for speed
+        return height + delta;
+      });
+
+      setBarHeights(newBarHeights);
+
+      // console.log(newBarHeights);
+
       // draw bars
       freq.map((f, i) => {
         const grad = ctx.createLinearGradient(
@@ -83,7 +105,13 @@ const App: React.FC = () => {
         grad.addColorStop(0.5, colors.mid);
         grad.addColorStop(0, colors.base);
         const value =
-          mode === Mode.MIC ? micFreqs[f] - squish[i] : 1 - squish[i];
+          mode === Mode.SAVER
+            ? (newBarHeights[i] / -ctx.canvas.height) *
+                (mic.getVolume() * 0.5) -
+              squish[i]
+            : mode === Mode.MIC
+            ? micFreqs[f] - squish[i]
+            : 1 - squish[i];
         const x = (i / freq.length) * ctx.canvas.width;
         const y = ctx.canvas.height;
         const width = ctx.canvas.width / freq.length;
@@ -104,7 +132,7 @@ const App: React.FC = () => {
       // draw grid
       for (let i = 0; i < grid.count; i++) {
         const y = (i / grid.count) * 450;
-        ctx.fillStyle = colors.background;
+        ctx.fillStyle = colors.grid;
         ctx.fillRect(0, y, 800, grid.width);
       }
 
@@ -185,6 +213,20 @@ const App: React.FC = () => {
                   Saver
                 </ModeButton>
               </ModeGroup>
+              <input
+                id="volume"
+                type="range"
+                value={mic.getVolume()}
+                onChange={(e) => {
+                  mic.setVolume(+e.target.value);
+                  // setVolume(+e.target.value)
+                }}
+                step={0.1}
+                min={0}
+                max={20}
+              />
+              {mic.getVolume() || "?"}
+              <label htmlFor="volume">Volume</label>
 
               <ModeButton onClick={onToggleStart} selected={isStarted}>
                 {isStarted ? "Stop" : "Start"}

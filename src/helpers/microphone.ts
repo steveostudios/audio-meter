@@ -6,6 +6,7 @@ export class Microphone {
   dataArray!: Uint8Array;
   destination!: AudioDestinationNode;
   gainNode!: GainNode;
+  volume!: number;
 
   constructor() {
     this.initialized = false;
@@ -26,10 +27,10 @@ export class Microphone {
         const bufferLength = this.analyser.frequencyBinCount;
         this.dataArray = new Uint8Array(bufferLength);
         // gain
-        // this.gainNode = this.audioContext.createGain();
-        // this.gainNode.gain.value = 0;
+        this.gainNode = this.audioContext.createGain();
+        this.gainNode.gain.value = 2;
+        this.microphone.connect(this.gainNode).connect(this.analyser);
         // this.microphone.connect(this.gainNode);
-        this.microphone.connect(this.analyser);
         //  // destination
         // this.destination = this.audioContext.destination;
         // this.destination.channelCount = 1;
@@ -40,6 +41,14 @@ export class Microphone {
   }
   freqRange = 128;
   sampleRate = 44100;
+  setVolume(volume: number) {
+    this.volume = volume;
+    this.gainNode.gain.value = volume;
+    console.log(volume);
+  }
+  getVolume() {
+    return this.volume;
+  }
   getDevices = async () => {
     return await navigator.mediaDevices
       .getUserMedia({ audio: true })
