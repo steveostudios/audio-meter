@@ -154,7 +154,7 @@ const App: React.FC = () => {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [colors, freq, grid, mode, squish, isStarted]);
+  }, [colors, freq, grid, mode, squish, isStarted, barHeights]);
 
   // change handlers
   const onToggleStart = () => {
