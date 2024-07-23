@@ -41,6 +41,7 @@ const App: React.FC = () => {
   const [grid, setGrid] = React.useState({
     count: 40,
     width: 3,
+    lock: false,
   });
   const [squish, setSquish] = React.useState([0, 0, 0, 0, 0, 0, 0, 0]);
 
@@ -89,7 +90,7 @@ const App: React.FC = () => {
         return height + delta;
       });
 
-      setBarHeights(newBarHeights);
+      // setBarHeights(newBarHeights);
 
       // console.log(newBarHeights);
 
@@ -118,7 +119,7 @@ const App: React.FC = () => {
         let height = value * -ctx.canvas.height;
 
         const remainder = height % GRID_SIZE;
-        if (remainder !== 0) {
+        if (remainder !== 0 && grid.lock) {
           height = height - remainder; // Adjust height down to the nearest gridline
         }
 
@@ -225,7 +226,6 @@ const App: React.FC = () => {
                 min={0}
                 max={20}
               />
-              {mic.getVolume() || "?"}
               <label htmlFor="volume">Volume</label>
 
               <ModeButton onClick={onToggleStart} selected={isStarted}>
@@ -282,6 +282,12 @@ const App: React.FC = () => {
                 value={grid.width}
                 onChange={onChangeGrid}
               />
+              <ModeButton
+                onClick={() => setGrid({ ...grid, lock: !grid.lock })}
+                selected={grid.lock}
+              >
+                {grid.lock ? "Locked to Grid" : "Lock to Grid"}
+              </ModeButton>
             </div>
           </ControlPanel>
         )}
