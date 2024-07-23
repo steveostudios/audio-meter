@@ -27,9 +27,9 @@ const App: React.FC = () => {
   const [mode, setMode] = React.useState<Mode>(Mode.MIC);
   const [controlPanel, setControlPanel] = React.useState(true);
   const [freq, setFreq] = React.useState([1, 2, 3, 4, 6, 8, 12, 16]);
-  const [barHeights, setBarHeights] = React.useState(
-    Array(freq.length).fill(0)
-  );
+  // const [barHeights, setBarHeights] = React.useState(
+  //   Array(freq.length).fill(0)
+  // );
 
   const [colors, setColors] = React.useState<Colors>({
     background: "#1e1e1e",
@@ -79,16 +79,16 @@ const App: React.FC = () => {
 
       // draw fake bars
       // Update bar heights
-      const newBarHeights = barHeights.map((height: number, i: number) => {
-        const targetHeight = Math.random() * -ctx.canvas.height;
-        const remainder = targetHeight % GRID_SIZE;
-        const adjustedHeight =
-          remainder !== 0 ? targetHeight - remainder : targetHeight;
+      // const newBarHeights = barHeights.map((height: number, i: number) => {
+      //   const targetHeight = Math.random() * -ctx.canvas.height;
+      //   const remainder = targetHeight % GRID_SIZE;
+      //   const adjustedHeight =
+      //     remainder !== 0 ? targetHeight - remainder : targetHeight;
 
-        // Smoothly animate towards the target height
-        const delta = (adjustedHeight - height) * 0.1; // Adjust the factor for speed
-        return height + delta;
-      });
+      //   // Smoothly animate towards the target height
+      //   const delta = (adjustedHeight - height) * 0.1; // Adjust the factor for speed
+      //   return height + delta;
+      // });
 
       // setBarHeights(newBarHeights);
 
@@ -106,13 +106,7 @@ const App: React.FC = () => {
         grad.addColorStop(0.5, colors.mid);
         grad.addColorStop(0, colors.base);
         const value =
-          mode === Mode.SAVER
-            ? (newBarHeights[i] / -ctx.canvas.height) *
-                (mic.getVolume() * 0.5) -
-              squish[i]
-            : mode === Mode.MIC
-            ? micFreqs[f] - squish[i]
-            : 1 - squish[i];
+          mode === Mode.MIC ? micFreqs[f] - squish[i] : 1 - squish[i];
         const x = (i / freq.length) * ctx.canvas.width;
         const y = ctx.canvas.height;
         const width = ctx.canvas.width / freq.length;
@@ -155,7 +149,7 @@ const App: React.FC = () => {
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [colors, freq, grid, mode, squish, isStarted, barHeights]);
+  }, [colors, freq, grid, mode, squish, isStarted]);
 
   // change handlers
   const onToggleStart = () => {
