@@ -16,6 +16,7 @@ export const SquishInput: React.FC<FreqInputProps> = (props) => {
   return (
     <Container>
       <input
+        id={id.toString()}
         type="range"
         value={value}
         min={0}

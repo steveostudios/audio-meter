@@ -13,8 +13,8 @@ export class Microphone {
     navigator.mediaDevices
       .getUserMedia({
         audio: {
-          echoCancellation: false,
-          noiseSuppression: false,
+          echoCancellation: true,
+          noiseSuppression: true,
           autoGainControl: false,
         },
       })
@@ -30,11 +30,6 @@ export class Microphone {
         this.gainNode = this.audioContext.createGain();
         this.gainNode.gain.value = 2;
         this.microphone.connect(this.gainNode).connect(this.analyser);
-        // this.microphone.connect(this.gainNode);
-        //  // destination
-        // this.destination = this.audioContext.destination;
-        // this.destination.channelCount = 1;
-        // this.microphone.connect(this.destination);
         this.initialized = true;
       })
       .catch((error) => {});
