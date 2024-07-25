@@ -39,7 +39,6 @@ export class Microphone {
   setVolume(volume: number) {
     this.volume = volume;
     this.gainNode.gain.value = volume;
-    console.log(volume);
   }
   getVolume() {
     return this.volume;

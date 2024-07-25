@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
 import { slugify, titleCase } from "../helpers/string";
 
-interface ButtonProps {
+interface Props {
   label: string;
   onClick: () => void;
   disabled?: boolean;
   selected?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = (props) => {
+export const Button: React.FC<Props> = (props) => {
   const { label, onClick, disabled } = props;
 
   const onClickHandler = () => {

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { slugify } from "../helpers/string";
+import { slugify } from "./../../helpers/string";
 
 interface Props {
   id: string;
@@ -18,7 +18,7 @@ export const Text: React.FC<Props> = (props) => {
   };
   return (
     <Container
-      id={`number_${slugify(label)}`}
+      id={`text_${slugify(label)}`}
       value={value}
       onChange={onChangeValue}
       readOnly={props.readonly || false}

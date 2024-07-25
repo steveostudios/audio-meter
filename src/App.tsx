@@ -1,16 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import "./App.css";
 import styled from "@emotion/styled";
-import { ColorInput } from "./components/ColorInput";
 import { Microphone } from "./helpers/microphone";
-import { Number } from "./components/Number";
+import { Number, Range, Text, Color, Label } from "./components/input";
 import { Button } from "./components/Button";
-import { Header } from "./components/Header";
-import { Row } from "./components/Row";
-import { Column } from "./components/Column";
-import { Range } from "./components/Range";
-import { Label } from "./components/Label";
-import { Text } from "./components/Text";
+import { Column, Row, Header } from "./components/layout";
 
 interface Colors {
   [key: string]: string;
@@ -332,7 +326,7 @@ const App: React.FC = () => {
               {Object.keys(colors).map((key) => (
                 <Row key={key}>
                   <Label htmlFor={key} label={key} />
-                  <ColorInput
+                  <Color
                     id={key}
                     label={key}
                     value={colors[key]}

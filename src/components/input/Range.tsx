@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { slugify } from "../helpers/string";
+import { slugify } from "./../../helpers/string";
 
 interface Props {
   label: string;
@@ -46,24 +46,17 @@ const Container = styled("input")(
     width: "100%",
     height: "2rem",
     fontWeight: "bold",
-    // appearance: "none",
     background: `linear-gradient(to right, var(--color-secondary) ${
       props.percent * 100
     }%, var(--color-input-bg) ${props.percent * 100}%)`,
     "-webkit-appearance": "none" /* Override default look */,
-    // width: "15rem",
     "::-webkit-slider-runnable-track": {
-      // "-webkit-appearance": "none" /* Override default look */,
       accentColor: "var(--color-primary)",
-
-      // background: "var(--color-input-bg)",
       height: "2rem",
       borderRadius: "0.25rem",
     },
     "::-webkit-slider-thumb": {
       "-webkit-appearance": "none" /* Override default look */,
-      // appearance: "none",
-      //     marginTop: "-12px", /* Centers thumb on the track */
       backgroundColor: "var(--color-primary)",
       height: "2rem",
       borderRadius: "0.25rem",

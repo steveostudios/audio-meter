@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { slugify } from "../helpers/string";
+import { slugify } from "./../../helpers/string";
 
 interface Props {
   id: string;

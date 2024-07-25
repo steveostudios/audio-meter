@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { titleCase } from "../helpers/string";
+import { titleCase } from "../../helpers/string";
 
 interface HeaderProps {
   label: string;

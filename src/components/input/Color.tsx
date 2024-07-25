@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
-import { slugify } from "../helpers/string";
+import { slugify } from "../../helpers/string";
 
-interface ColorInputProps {
+interface Props {
   id: string;
   label: string;
   value: string;
   onChange: (key: string, value: string) => void;
 }
 
-export const ColorInput: React.FC<ColorInputProps> = (props) => {
+export const Color: React.FC<Props> = (props) => {
   const { id, label, value, onChange } = props;
 
   const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
